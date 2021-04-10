@@ -10,6 +10,9 @@ import SwiftUI
 struct RecipeFeaturedView: View {
     @EnvironmentObject var model: RecipeModel
     @State var isDetailViewShowing = false
+    @State var tabSelectionIndex = 0
+    
+  
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -20,7 +23,7 @@ struct RecipeFeaturedView: View {
             .font(.largeTitle)
             
         GeometryReader { geo in
-        TabView {
+          TabView(selection: $tabSelectionIndex) {
             // Loop through each recipe
             ForEach(0..<model.recipes.count) { index in
                 // Only show those that are featured
@@ -45,7 +48,10 @@ struct RecipeFeaturedView: View {
                                 
                             }
                     
-                    }).sheet(isPresented: $isDetailViewShowing) {
+                        
+                        
+                    }).tag(index)
+                    .sheet(isPresented: $isDetailViewShowing) {
                     // Show the RecipeDetailView
                         RecipeDetailView(recipe: model.recipes[index])
                     }
@@ -64,12 +70,23 @@ struct RecipeFeaturedView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Preperation Time:")
                     .font(.headline)
-                Text("1 hour")
-                Text("HighLights")
+                Text(model.recipes[tabSelectionIndex].prepTime)
+                Text("Highlights")
                     .font(.headline)
-                Text("Healthy")
+                RecipeHighlights(highlights: model.recipes[tabSelectionIndex].highlights)
             }.padding([.leading, .bottom])
         }
+        .onAppear(perform: {
+            setFeaturedIndex()
+        })
+    }
+    
+    func setFeaturedIndex() {
+        // Find the first recipe that is feautred
+     var index = model.recipes.firstIndex { (recipe) -> Bool in
+            return recipe.featured
+        }
+        tabSelectionIndex = index ?? 0
     }
 }
 
