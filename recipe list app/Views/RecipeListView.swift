@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeListView: View {
     
-  @EnvironmentObject var model: RecipeModel
+    @EnvironmentObject var model: RecipeModel
     
     var body: some View {
         NavigationView {
@@ -19,27 +19,36 @@ struct RecipeListView: View {
                     .padding(.leading)
                     .padding(.top, 40)
                     .font(.largeTitle)
-                List(model.recipes) { r in
-                
-                NavigationLink(
-                    destination: RecipeDetailView(recipe: r),
-                    label: {
-                        
-                        //MARK: ROW Item
-                        HStack(spacing: 20) {
-                            Image(r.image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50, alignment: .center)
-                                .clipped()
-                                .cornerRadius(5)
-                            Text(r.name)
+                ScrollView {
+                    LazyVStack(alignment: .leading) {
+                        ForEach(model.recipes) { r in
+                            
+                            NavigationLink(
+                                destination: RecipeDetailView(recipe: r),
+                                label: {
+                                    
+                                    //MARK: ROW Item
+                                    HStack(spacing: 20) {
+                                        Image(r.image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 50, height: 50, alignment: .center)
+                                            .clipped()
+                                            .cornerRadius(5)
+                                        Text(r.name)
+                                            .foregroundColor(.black)
+                                    }
+                                    
+                                })
+                            
                         }
-                        
-                    })
-           
+                    }
+                }
+                
+                
             }.navigationBarHidden(true)
-            }
+            .padding(.leading)
+            
         }
     }
 }
