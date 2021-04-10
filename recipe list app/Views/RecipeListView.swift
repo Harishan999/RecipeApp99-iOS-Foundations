@@ -13,7 +13,13 @@ struct RecipeListView: View {
     
     var body: some View {
         NavigationView {
-            List(model.recipes) { r in
+            VStack(alignment: .leading) {
+                Text("All Recipes")
+                    .bold()
+                    .padding(.leading)
+                    .padding(.top, 40)
+                    .font(.largeTitle)
+                List(model.recipes) { r in
                 
                 NavigationLink(
                     destination: RecipeDetailView(recipe: r),
@@ -32,7 +38,8 @@ struct RecipeListView: View {
                         
                     })
            
-            }.navigationBarTitle("All Recipes")
+            }.navigationBarHidden(true)
+            }
         }
     }
 }
@@ -40,5 +47,6 @@ struct RecipeListView: View {
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListView()
+            .environmentObject(RecipeModel())
     }
 }
