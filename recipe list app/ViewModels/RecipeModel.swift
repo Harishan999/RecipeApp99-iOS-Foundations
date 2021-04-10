@@ -15,4 +15,18 @@ class RecipeModel: ObservableObject {
         self.recipes = DataService.getLocalData()
         
     }
+    
+    static func getPortion(ingredient: Ingredient,recipeServings: Int, targetServings: Int) -> String {
+        
+        // Get a single serving by mutiplying denominator by the recipe servings
+        
+        // Get target portion by multiplying numerator by target servings
+        
+        // Reduce fraction by greatest common divisor
+        
+        // Get the whole portion if numerator > demoninator
+        
+        // Express the reminder as a fraction
+        return String(targetServings)
+    }
 }
