@@ -2,6 +2,7 @@
 [
     {
         "name": "Eggplant Parmesan",
+        "category": "",
         "featured": false,
         "image" : "eggplant parmesan",
         "description": "Baked eggplant with bread crumbs and lots of cheese. Delicious!",
